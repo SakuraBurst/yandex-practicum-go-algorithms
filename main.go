@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	functionvalue "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/FunctionValue"
+	neigbhors "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/Neigbhors"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	functionvalue.FunctionValue()
+	neigbhors.Neigbhors()
 }
 
 func createFilesForNextSprint(path string) {
