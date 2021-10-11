@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	binaryEx "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/Binary"
+	factorization "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/Factorization"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	binaryEx.BinaryEx()
+	factorization.Factorization()
 }
 
 func createFilesForNextSprint(path string) {
