@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	factorization "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/Factorization"
+	listForm "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/ListForm"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	factorization.Factorization()
+	listForm.ListForm()
 }
 
 func createFilesForNextSprint(path string) {
