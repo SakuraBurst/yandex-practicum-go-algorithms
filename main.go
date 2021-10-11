@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	neigbhors "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/Neigbhors"
+	binaryEx "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/Binary"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	neigbhors.Neigbhors()
+	binaryEx.BinaryEx()
 }
 
 func createFilesForNextSprint(path string) {
