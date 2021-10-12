@@ -1,0 +1,5 @@
+package sleightofhand
+
+func SleightOfHand() {
+
+}

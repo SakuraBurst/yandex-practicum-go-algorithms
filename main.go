@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	wrongLetter "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/WrongLetter"
+	nearestzero "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1FinalEx/NearestZero"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	wrongLetter.WrongLetter()
+	nearestzero.NearestZero()
 }
 
 func createFilesForNextSprint(path string) {
