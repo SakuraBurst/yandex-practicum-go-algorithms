@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	listForm "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/ListForm"
+	wrongLetter "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1/WrongLetter"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	listForm.ListForm()
+	wrongLetter.WrongLetter()
 }
 
 func createFilesForNextSprint(path string) {
