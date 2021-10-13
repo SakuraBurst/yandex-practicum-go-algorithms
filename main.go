@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	nearestzero "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1FinalEx/NearestZero"
+	sleightofhand "github.com/SakuraBurst/yandex-practicum-go-algorithms/Sprint1FinalEx/SleightOfHand"
 )
 
 func main() {
 	// createFilesForNextSprint("Sprint1")
-	nearestzero.NearestZero()
+	sleightofhand.SleightOfHand()
 }
 
 func createFilesForNextSprint(path string) {
