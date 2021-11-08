@@ -9,14 +9,14 @@ import (
 
 var phoneKeys = map[string][]string{
 	"1": nil,
-	"2": []string{"a", "b", "c"},
-	"3": []string{"d", "e", "f"},
-	"4": []string{"g", "h", "i"},
-	"5": []string{"j", "k", "l"},
-	"6": []string{"m", "n", "o"},
-	"7": []string{"p", "q", "r", "s"},
-	"8": []string{"t", "u", "v"},
-	"9": []string{"w", "x", "y", "z"},
+	"2": {"a", "b", "c"},
+	"3": {"d", "e", "f"},
+	"4": {"g", "h", "i"},
+	"5": {"j", "k", "l"},
+	"6": {"m", "n", "o"},
+	"7": {"p", "q", "r", "s"},
+	"8": {"t", "u", "v"},
+	"9": {"w", "x", "y", "z"},
 	"0": nil,
 }
 
