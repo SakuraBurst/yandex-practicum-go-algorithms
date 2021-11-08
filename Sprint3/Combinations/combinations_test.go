@@ -14,8 +14,8 @@ type Test struct {
 	outputData string
 }
 
-func TestCombinations(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestCombinations(t *testing.T) {
+	tests := []Test{{strings.NewReader("23"), "ad ae af bd be bf cd ce cf"}, {strings.NewReader("92"), "wa wb wc xa xb xc ya yb yc za zb zc"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		combinations.Combinations(v.inputData, buf)
