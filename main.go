@@ -59,11 +59,13 @@ func createFilesForNextSprint(path string) {
 import (
 	"io"
 	"bufio"
+	"fmt"
 )
 
 func {{.name}}(r io.Reader, w io.Writer){
 	reader := bufio.NewReader(r)
 	writer := bufio.NewWriter(w)
+	fmt.Println(reader, writer)
 }`)
 
 		if err != nil {
