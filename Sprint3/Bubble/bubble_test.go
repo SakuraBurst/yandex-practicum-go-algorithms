@@ -22,6 +22,9 @@ func TestBubble(t *testing.T) {
 1 2 3 4 9
 `}, {strings.NewReader(`5
 12 8 9 10 11`), `8 9 10 11 12
+`}, {strings.NewReader(`2
+4 5
+Просто пример из условия`), `4 5
 `}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})

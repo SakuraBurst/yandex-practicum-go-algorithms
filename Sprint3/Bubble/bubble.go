@@ -30,6 +30,17 @@ func Bubble(r io.Reader, w io.Writer) {
 			}
 		}
 		if !isChanged {
+			if writer.Buffered() == 0 {
+				for i, v := range data {
+					if i == n-1 {
+						writer.WriteString(strconv.Itoa(v))
+						writer.WriteByte('\n')
+					} else {
+						writer.WriteString(strconv.Itoa(v))
+						writer.WriteString(" ")
+					}
+				}
+			}
 			break
 		} else {
 			for i, v := range data {
