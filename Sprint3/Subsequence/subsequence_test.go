@@ -14,8 +14,14 @@ type Test struct {
 	outputData string
 }
 
-func TestSubsequence(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestSubsequence(t *testing.T) {
+	tests := []Test{{strings.NewReader(`abc
+ahbgdcu
+`), "True"}, {strings.NewReader(`abcp
+ahpc
+`), "False"}, {strings.NewReader(`islx
+yoytgtshldmogkdburkbcfvoapepjpcuwemusfkfztrzxstytrnarlizjhuoscuzlraezlaweipuuqdgvhwkhhoufexojaps
+`), "True"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		subsequence.Subsequence(v.inputData, buf)
