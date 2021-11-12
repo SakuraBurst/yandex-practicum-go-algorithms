@@ -14,8 +14,11 @@ type Test struct {
 	outputData string
 }
 
-func TestWardrobe(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestWardrobe(t *testing.T) {
+	tests := []Test{{strings.NewReader(`7
+0 2 1 2 0 0 1`), "0 0 0 1 1 2 2"}, {strings.NewReader(`5
+2 1 2 0 1`), "0 1 1 2 2"}, {strings.NewReader(`6
+2 1 1 2 0 2`), "0 1 1 2 2 2"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		wardrobe.Wardrobe(v.inputData, buf)
