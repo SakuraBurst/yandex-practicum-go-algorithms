@@ -14,8 +14,10 @@ type Test struct {
 	outputData string
 }
 
-func TestPerimeterOfTriangle(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestPerimeterOfTriangle(t *testing.T) {
+	tests := []Test{{strings.NewReader(`4
+6 3 3 2`), "8"}, {strings.NewReader(`6
+5 3 7 2 8 3`), "20"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		perimeterOfTriangle.PerimeterOfTriangle(v.inputData, buf)

@@ -3,7 +3,6 @@ package housebuying
 import (
 	"bufio"
 	"io"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -65,8 +64,4 @@ func merge(s []string) []int {
 		}
 		return result
 	}
-}
-
-func main() {
-	HouseBuying(os.Stdin, os.Stdout)
 }
