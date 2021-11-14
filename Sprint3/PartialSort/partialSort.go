@@ -3,7 +3,6 @@ package partialSort
 import (
 	"bufio"
 	"io"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -21,20 +20,24 @@ func PartialSort(r io.Reader, w io.Writer) {
 		intData[i] = iV
 	}
 	lookingFor := 0
+	currentMax := 0
 	blockCounter := 0
-	currentBlockLenght := 0
+	betwinLookingForAndCurentMax := 0
 	for i := 0; i < n; i++ {
-		if lookingFor == intData[i] && currentBlockLenght == 0 {
+		if lookingFor == intData[i] && currentMax == 0 {
 			lookingFor = i + 1
 			blockCounter++
 		} else {
-			if intData[i] > lookingFor {
-				currentBlockLenght++
-			} else {
-				currentBlockLenght--
+			if currentMax < intData[i] {
+				currentMax = intData[i]
+				betwinLookingForAndCurentMax++
 			}
-			if currentBlockLenght == 0 {
+			if intData[i] < currentMax {
+				betwinLookingForAndCurentMax++
+			}
+			if betwinLookingForAndCurentMax == currentMax-lookingFor+1 {
 				blockCounter++
+				currentMax = 0
 				lookingFor = i + 1
 			}
 		}
@@ -47,8 +50,4 @@ func PartialSort(r io.Reader, w io.Writer) {
 	writer := bufio.NewWriter(w)
 	writer.WriteString(strconv.Itoa(blockCounter))
 	writer.Flush()
-}
-
-func main() {
-	PartialSort(os.Stdin, os.Stdout)
 }
