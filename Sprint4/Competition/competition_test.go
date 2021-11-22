@@ -20,7 +20,9 @@ func TestCompetition(t *testing.T) {
 0 1 0`), "2"}, {strings.NewReader(`10
 0 0 1 0 0 0 1 0 0 1`), "4"}, {strings.NewReader(`72
 1 1 1 1 0 1 1 0 0 0 0 0 1 1 0 0 1 1 0 0 1 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 1 1 0 0 0 1 0 1 1 1 0 1 1 0 0 1 0 0 0 1 0 1 0 0 0 1 1 1 1 1 1 0 1 0 0 0
-`), "46"}}
+`), "46"}, {strings.NewReader(`9
+0 0 1 1 1 0 0 1 1
+`), "8"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		competition.Competition(v.inputData, buf)
