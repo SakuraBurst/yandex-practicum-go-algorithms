@@ -14,8 +14,12 @@ type Test struct {
 	outputData string
 }
 
-func TestWierdComparison(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestWierdComparison(t *testing.T) {
+	tests := []Test{{strings.NewReader(`mxyskaoghi
+qodfrgmslc`), "YES"}, {strings.NewReader(`agg
+xdd`), "YES"}, {strings.NewReader(`agg
+xda`), "NO"}, {strings.NewReader(`aba
+xxx`), "NO"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		wierdComparison.WierdComparison(v.inputData, buf)
