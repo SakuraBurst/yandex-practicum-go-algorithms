@@ -10,41 +10,40 @@ import (
 
 func Competition(r io.Reader, w io.Writer) {
 	reader := bufio.NewReader(r)
+	writer := bufio.NewWriter(w)
 	nString, _ := reader.ReadString('\n')
 	n, _ := strconv.Atoi(strings.TrimSpace(nString))
-	dataString, _ := reader.ReadString('\n')
-	data := strings.Fields(dataString)
-	writer := bufio.NewWriter(w)
-	firstLoopResult := 0
-	m := map[int][]int{}
 	if n == 0 {
 		writer.WriteString("0")
+		writer.Flush()
+		return
 	}
+	dataString, _ := reader.ReadString('\n')
+	data := strings.Fields(dataString)
+
+	sumOfAll := 0
+	resultIndexes := map[int][]int{}
+
+	resultIndexes[0] = append(resultIndexes[0], 0)
 	for i := 0; i < n; i++ {
 		if data[i] == "0" {
-			firstLoopResult++
-			m[firstLoopResult] = append(m[firstLoopResult], i+1)
+			sumOfAll++
+			resultIndexes[sumOfAll] = append(resultIndexes[sumOfAll], i+1)
 		} else {
-			firstLoopResult--
-			m[firstLoopResult] = append(m[firstLoopResult], i+1)
+			sumOfAll--
+			resultIndexes[sumOfAll] = append(resultIndexes[sumOfAll], i+1)
 		}
 	}
 	max := 0
-	// fmt.Println(m)
-	for k, v := range m {
-		mr := 0
-		if k == 0 {
-			mr = v[len(v)-1]
-		} else {
-			mr = v[len(v)-1] - v[0]
+	for _, v := range resultIndexes {
+		if len(v) == 0 {
+			continue
 		}
-
-		if mr > max {
-			max = mr
+		firstAndLastIndexesRangeOfCurrentResult := v[len(v)-1] - v[0]
+		if firstAndLastIndexesRangeOfCurrentResult > max {
+			max = firstAndLastIndexesRangeOfCurrentResult
 		}
 	}
-	// fmt.Println(max)
-
 	writer.WriteString(strconv.Itoa(max))
 
 	writer.Flush()
