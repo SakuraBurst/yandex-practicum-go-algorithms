@@ -14,8 +14,14 @@ type Test struct {
 	outputData string
 }
 
-func TestPolinominalHash(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestPolinominalHash(t *testing.T) {
+	tests := []Test{{strings.NewReader(`123
+100003
+a`), "97"}, {strings.NewReader(`123
+100003
+hash`), "6080"}, {strings.NewReader(`123
+100003
+HaSH`), "56156"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		polinominalHash.PolinominalHash(v.inputData, buf)
@@ -24,3 +30,25 @@ func TestPolinominalHash(t *testing.T){
 		}
 	}
 }
+func TestBreakPolinominalHash(t *testing.T) {
+	tests := []Test{{strings.NewReader(`1000
+123987123
+|||`), "97"}, {strings.NewReader(`1000
+123987123
+gggmm`), "97"}}
+	results := make([]string, 0, 2)
+	for _, v := range tests {
+		buf := bytes.NewBuffer([]byte{})
+		polinominalHash.PolinominalHash(v.inputData, buf)
+		results = append(results, buf.String())
+	}
+	if results[0] == results[1] {
+		t.Errorf("\nодинаковые:\n%s\ngot:\n%s", results[0], results[1])
+	} else {
+		t.Errorf("\nразные:\n%s\ngot:\n%s", results[0], results[1])
+	}
+}
+
+// ezh
+
+//
