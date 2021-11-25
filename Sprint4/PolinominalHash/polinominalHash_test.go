@@ -33,9 +33,9 @@ HaSH`), "56156"}}
 func TestBreakPolinominalHash(t *testing.T) {
 	tests := []Test{{strings.NewReader(`1000
 123987123
-|||`), "97"}, {strings.NewReader(`1000
+ezhgeljkablzwnvuwqvo`), "97"}, {strings.NewReader(`1000
 123987123
-gggmm`), "97"}}
+gbpdcvkumyfxillgnqru`), "97"}}
 	results := make([]string, 0, 2)
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
