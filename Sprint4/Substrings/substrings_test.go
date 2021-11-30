@@ -14,8 +14,9 @@ type Test struct {
 	outputData string
 }
 
-func TestSubstrings(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestSubstrings(t *testing.T) {
+	tests := []Test{{strings.NewReader(`abcabcbb`), "3"}, {strings.NewReader(`bbbbb`), "1"}, {strings.NewReader(`ojodx`), "4"},
+		{strings.NewReader(`vdoejgvnubksokvsjlxtqqptanegzlzxbzckzrczhjvxybfgkkbdbqzaiceubawpkkdxisvbhzbvtklemyrdalboelmtywujlztbeehkyprhwxugzhkisqvumdiclysvdxvfcgkmvpdsjeodzzxephrlbhrnyomhbldmvhwhvtciiahdqllcqhdeumgluqjkcgcdksvpypdlvwbzsoeeqvpnaxauljtnimbzoxtzobcftclunuhogukkstqrmehpwiogkpmcijakbzgrgfbnjemkcqotguldyzafrefygakxfjqpsyhidqhfkgslbjtdljkhykybjegpnzngaaxpmloseotledyowkbxfzdbrfyccwelvatdqbqjkynnotwzujfjydvtxoskalenehehmgztlauvsnlohghswkmjegrvlnyleaecmfjbtlmbqhgnhztpgirpszqrsnsqljfxqhadaqujpzwgysxzyksmsmwbjffywsbzktxqwgkauivppgmisomniajxmwgjnfhhelbsrhmwuzkdmtahzzsvlxnbvsmmzagieriaemfjxfkipwncfzvmznnehdxgguufspidpviokmmsaywhbxkcbuvjcwnetxgmbaslkbchnmgxgzilpamyourrgpdwdeqcqioipvypmtaojbmebyfqgxkxaoaqrqybzkybhmxrcbjagamdfouaunbupctksmqjzekblegrwqtrusiqbusqabljerkahkyajwuflruxxtspeeqkqijbhppeinlsgfrotudhhtkcglxnmowyebhgsxfbwrrmhpvxvasispoljjauytpauerxirlzifofyaenoeqcrvnkihiojsxfjlmrwevfxmeukjxkpigrzxfqsnexxzokfzgviveltmdbusdvdryazfgzvhvwxucofojfkdmjdzeqchvripidnowbummaiiempkpvojenpkbtongrpscisrnhvibhdvdeueirecqvhvzbdxhrqpg`), "19"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		substrings.Substrings(v.inputData, buf)
