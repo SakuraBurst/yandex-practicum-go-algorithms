@@ -14,8 +14,24 @@ type Test struct {
 	outputData string
 }
 
-func TestNearestStop(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestNearestStop(t *testing.T) {
+	tests := []Test{{strings.NewReader(`3
+-1 0
+1 0
+2 5
+3
+10 0
+20 0
+22 5
+`), "3"}, {strings.NewReader(`3
+-1 0
+1 0
+0 5
+3
+10 0
+20 0
+22 5
+`), "2"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		nearestStop.NearestStop(v.inputData, buf)
