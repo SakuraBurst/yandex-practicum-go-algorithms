@@ -14,8 +14,16 @@ type Test struct {
 	outputData string
 }
 
-func TestSharedSubarray(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestSharedSubarray(t *testing.T) {
+	tests := []Test{{strings.NewReader(`5
+1 2 3 2 1
+5
+3 2 1 5 6
+`), "3"}, {strings.NewReader(`5
+1 2 3 4 5
+3
+4 5 9
+`), "2"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		sharedSubarray.SharedSubarray(v.inputData, buf)
