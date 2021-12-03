@@ -15,7 +15,7 @@ type Test struct {
 }
 
 func TestHashTable(t *testing.T) {
-	tests := []Test{{strings.NewReader(`214
+	tests := []Test{{strings.NewReader(`10
 get 1
 put 1 10
 put 2 4
