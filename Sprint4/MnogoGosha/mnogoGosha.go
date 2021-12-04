@@ -9,7 +9,7 @@ import (
 )
 
 const Q = 1000000009
-const R = 1 << 32
+const R = 1 << 62
 
 func MnogoGosha(r io.Reader, w io.Writer) {
 
