@@ -10,9 +10,10 @@ import (
 )
 
 type KeyValue struct {
-	isExist bool
-	key     int
-	value   int
+	isExist   bool
+	isDeleted bool
+	key       int
+	value     int
 }
 
 type HashMap []KeyValue
@@ -24,7 +25,7 @@ func (hm HashMap) hash(key int) int {
 func (hm HashMap) Get(key int) KeyValue {
 	potentialKey := hm.hash(key)
 	for i := 0; i < len(hm); i++ {
-		if hm[potentialKey].isExist && hm[potentialKey].key != key {
+		if hm[potentialKey].isDeleted || (hm[potentialKey].isExist && hm[potentialKey].key != key) {
 			potentialKey++
 			if potentialKey == len(hm) {
 				potentialKey = 0
@@ -37,6 +38,8 @@ func (hm HashMap) Get(key int) KeyValue {
 	return hm[potentialKey]
 }
 
+// начинаем искать место, если ключ-значение существует но ключ не равен тому ключу, который мы ищем
+// то тогда переходим к следующему индексу. Если нашли старое значение или пустое значение - записываем туда
 func (hm HashMap) Put(kv KeyValue) {
 	potentialKey := hm.hash(kv.key)
 	for i := 0; i < len(hm); i++ {
@@ -54,12 +57,24 @@ func (hm HashMap) Put(kv KeyValue) {
 }
 
 func (hm HashMap) Delete(key int) (int, error) {
-	if hm[hm.hash(key)].isExist {
+	potentialKey := hm.hash(key)
+	for i := 0; i < len(hm); i++ {
+		if hm[potentialKey].isExist && hm[potentialKey].key != key {
+			potentialKey++
+			if potentialKey == len(hm) {
+				potentialKey = 0
+			}
+		} else {
+			break
+		}
+
+	}
+	if hm[potentialKey].isExist {
 		defer func() {
-			hm[hm.hash(key)] = KeyValue{}
+			hm[potentialKey] = KeyValue{isDeleted: true}
 		}()
 
-		return hm[hm.hash(key)].value, nil
+		return hm[potentialKey].value, nil
 	} else {
 		return 0, errors.New("no such key")
 	}
@@ -109,15 +124,15 @@ func HashTable(r io.Reader, w io.Writer) {
 
 func getPrimeForN(n int) int {
 	switch {
-	case n < 10:
+	case n <= 10:
 		return 13
-	case n < 100:
+	case n <= 100:
 		return 107
-	case n < 1000:
+	case n <= 1000:
 		return 1009
-	case n < 10000:
+	case n <= 10000:
 		return 10007
-	case n < 100000:
+	case n <= 100000:
 		return 100003
 	case n <= 1000000:
 		return 1000003
