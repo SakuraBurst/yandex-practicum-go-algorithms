@@ -1,13 +1,27 @@
 package bulbs
 
-import (
-	"io"
-	"bufio"
-	"fmt"
-)
+type Node struct {
+	Value int
+	Left  *Node
+	Right *Node
+}
 
-func Bulbs(r io.Reader, w io.Writer){
-	reader := bufio.NewReader(r)
-	//writer := bufio.NewWriter(w)
-	fmt.Println(reader)
+var currentMax = 0
+var isInit = true
+
+func Bulbs(root *Node) int {
+	if isInit {
+		isInit = false
+		currentMax = root.Value
+	}
+	if root.Value > currentMax {
+		currentMax = root.Value
+	}
+	if root.Left != nil {
+		Bulbs(root.Left)
+	}
+	if root.Right != nil {
+		Bulbs(root.Right)
+	}
+	return currentMax
 }
