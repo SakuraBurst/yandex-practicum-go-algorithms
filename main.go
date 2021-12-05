@@ -18,7 +18,7 @@ func main() {
 	// 	log.Fatal(err)
 	// }
 	// CreateAllDirectoriesAndFilesFromHtmlList(mainNode, "Sprint2")
-	createFilesForNextSprint("Sprint4FinalEx")
+	createFilesForNextSprint("Sprint5")
 }
 
 func createFilesForNextSprint(path string) {
