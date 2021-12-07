@@ -14,8 +14,8 @@ type Test struct {
 	outputData string
 }
 
-func TestDifferentSerchTrees(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestDifferentSerchTrees(t *testing.T) {
+	tests := []Test{{strings.NewReader("2"), "2"}, {strings.NewReader("3"), "5"}, {strings.NewReader("4"), "14"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer([]byte{})
 		differentSerchTrees.DifferentSerchTrees(v.inputData, buf)
