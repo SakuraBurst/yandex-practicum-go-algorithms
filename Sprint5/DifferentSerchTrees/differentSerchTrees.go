@@ -29,6 +29,7 @@ func DifferentSerchTrees(r io.Reader, w io.Writer) {
 func countAllUniqueBST(left, right int) []*Node {
 	nodes := make([]*Node, 0)
 	if left > right {
+		// fmt.Println(left, right, nil)
 		return append(nodes, nil)
 	}
 	for i := left; i <= right; i++ {
