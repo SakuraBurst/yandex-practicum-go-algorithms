@@ -1,13 +1,28 @@
 package filterUp
 
-import (
-	"io"
-	"bufio"
-	"fmt"
-)
+func SiftUp(heap []int, idx int) int {
+	// Your code
+	// “ヽ(´▽｀)ノ”
+	for heap[idx] > heap[idx/2] {
+		if idx == 1 {
+			break
+		}
+		heap[idx], heap[idx/2] = heap[idx/2], heap[idx]
+		idx /= 2
 
-func FilterUp(r io.Reader, w io.Writer){
-	reader := bufio.NewReader(r)
-	//writer := bufio.NewWriter(w)
-	fmt.Println(reader)
+	}
+	return idx
+}
+
+func SiftUpRecurcial(heap []int, idx int) int {
+	if idx == 1 {
+		return idx
+	}
+	parrent := idx / 2
+	if heap[idx] > heap[parrent] {
+		heap[idx], heap[parrent] = heap[parrent], heap[idx]
+		return SiftUpRecurcial(heap, parrent)
+	} else {
+		return idx
+	}
 }
