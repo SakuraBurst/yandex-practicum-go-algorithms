@@ -10,6 +10,11 @@ import (
 	"golang.org/x/net/html"
 )
 
+type Node struct {
+	val  int
+	next *Node
+}
+
 func main() {
 	// buf := bytes.NewBuffer([]byte{})
 	// buf.WriteString(`<ul class="tabs-menu tabs-menu_theme_normal tabs-menu_layout_vert tabs-menu_size_m tabs-menu_role_problems inline-block i-bem tabs-menu_js_inited" data-bem="{&quot;tabs-menu&quot;:{}}" role="menu"><li class="tabs-menu__tab tabs-menu__tab_first_yes"><a class="link" href="/contest/22779/problems/A/"><span class="tabs-menu__tab-content-text">A. Мониторинг</span></a></li><li class="tabs-menu__tab tabs-menu__tab_active_yes"><a class="link" href="/contest/22779/problems/B/"><span class="tabs-menu__tab-content-text">B. Список дел</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/C/"><span class="tabs-menu__tab-content-text">C. Нелюбимое дело</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/D/"><span class="tabs-menu__tab-content-text">D. Заботливая мама</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/E/"><span class="tabs-menu__tab-content-text">E. Всё наоборот</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/F/"><span class="tabs-menu__tab-content-text">F. Стек - Max</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/G/"><span class="tabs-menu__tab-content-text">G. Стек - MaxEffective</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/H/"><span class="tabs-menu__tab-content-text">H. Скобочная последовательность</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/I/"><span class="tabs-menu__tab-content-text">I. Ограниченная очередь</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/J/"><span class="tabs-menu__tab-content-text">J. Списочная очередь</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/K/"><span class="tabs-menu__tab-content-text">K. Рекурсивные числа Фибоначчи</span></a></li><li class="tabs-menu__tab"><a class="link" href="/contest/22779/problems/L/"><span class="tabs-menu__tab-content-text">L. Фибоначчи по модулю</span></a></li></ul>`)
@@ -19,6 +24,16 @@ func main() {
 	// }
 	// CreateAllDirectoriesAndFilesFromHtmlList(mainNode, "Sprint2")
 	createFilesForNextSprint("Sprint5")
+}
+
+func reverseLinkedList(n, previesNode *Node) *Node {
+	if n.next == nil {
+		n.next = previesNode
+		return n
+	}
+	oldNext := n.next
+	n.next = previesNode
+	return reverseLinkedList(oldNext, n)
 }
 
 func createFilesForNextSprint(path string) {
