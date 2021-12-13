@@ -1,13 +1,22 @@
 package maxDepth
 
-import (
-	"io"
-	"bufio"
-	"fmt"
-)
+type Node struct {
+	Value int
+	Left  *Node
+	Right *Node
+}
 
-func MaxDepth(r io.Reader, w io.Writer){
-	reader := bufio.NewReader(r)
-	//writer := bufio.NewWriter(w)
-	fmt.Println(reader)
+func Solution(root *Node) int {
+	// Your code
+	// “ヽ(´▽｀)ノ”
+	if root == nil {
+		return 0
+	}
+
+	l := Solution(root.Left)
+	r := Solution(root.Right)
+	if l > r {
+		return l + 1
+	}
+	return r + 1
 }
