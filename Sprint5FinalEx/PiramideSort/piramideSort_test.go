@@ -46,8 +46,18 @@ rita
 gosha
 gena
 alla
-`},
-		{strings.NewReader(`13
+`}, {strings.NewReader(`5
+a 0 0
+ab 0 0
+abc 0 0
+abcd 0 0
+abcde 0 0
+Проверка лексикографической сортировки`), `a
+ab
+abc
+abcd
+abcde
+`}, {strings.NewReader(`13
 tufhdbi 76 58
 rqyoazgbmv 59 78
 qvgtrlkmyrm 35 27

@@ -3,6 +3,7 @@ package piramideSort
 import (
 	"bufio"
 	"io"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -28,7 +29,7 @@ func (pq *PriorityQueue) Next() CompetitionResult {
 
 	defer func() {
 		pq.queue[1] = pq.queue[pq.lastItemIndex]
-		pq.queue = pq.queue[:(len(pq.queue) - 1)]
+		pq.queue = pq.queue[:(pq.Len() - 1)]
 		pq.SiftDownRebalance(1)
 		pq.lastItemIndex--
 	}()
@@ -50,19 +51,15 @@ func (pq PriorityQueue) SiftUpRebalance(index int) {
 func (pq PriorityQueue) SiftDownRebalance(index int) {
 	left := index * 2
 	right := index*2 + 1
-	if left >= len(pq.queue) {
+	if left >= pq.Len() {
 		return
 	}
 	best := 0
 
-	if right < len(pq.queue) && pq.Less(right, left) {
+	if right < pq.Len() && pq.Less(right, left) {
 		best = right
 	} else {
 		best = left
-	}
-
-	if pq.Equals(index, best) {
-		return
 	}
 
 	if pq.Less(best, index) {
@@ -87,8 +84,8 @@ func (pq PriorityQueue) Swap(a, b int) {
 	pq.queue[a], pq.queue[b] = pq.queue[b], pq.queue[a]
 }
 
-func (pq PriorityQueue) Equals(a, b int) bool {
-	return pq.queue[a] == pq.queue[b]
+func (pq PriorityQueue) Len() int {
+	return len(pq.queue)
 }
 
 func PiramideSort(r io.Reader, w io.Writer) {
@@ -116,11 +113,13 @@ func PiramideSort(r io.Reader, w io.Writer) {
 }
 
 func compareStings(s1, s2 string) bool {
+	s1Lenght := len(s1)
+	s2Lenght := len(s2)
 	minLenght := 0
-	if len(s1) > len(s2) {
-		minLenght = len(s2)
+	if s1Lenght > s2Lenght {
+		minLenght = s2Lenght
 	} else {
-		minLenght = len(s1)
+		minLenght = s1Lenght
 	}
 	i, sum1, sum2 := 0, 0, 0
 	for i < minLenght && sum1 == sum2 {
@@ -128,5 +127,12 @@ func compareStings(s1, s2 string) bool {
 		sum2 += int(s2[i])
 		i++
 	}
-	return sum1 <= sum2
+	if sum1 == sum2 {
+		return s1Lenght < s2Lenght
+	}
+	return sum1 < sum2
+}
+
+func main() {
+	PiramideSort(os.Stdin, os.Stdout)
 }
