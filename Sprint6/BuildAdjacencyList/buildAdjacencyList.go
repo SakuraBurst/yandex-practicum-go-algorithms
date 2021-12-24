@@ -8,12 +8,12 @@ import (
 	"strings"
 )
 
-type Graph struct {
+type Node struct {
 	pointsTo AdjacenceList
 	value    int
 }
 
-type AdjacenceList []*Graph
+type AdjacenceList []*Node
 
 func BuildAdjacencyList(r io.Reader, w io.Writer) {
 	scaner := bufio.NewScanner(r)
@@ -28,10 +28,10 @@ func BuildAdjacencyList(r io.Reader, w io.Writer) {
 		edgeA, _ := strconv.Atoi(edge[0])
 		edgeB, _ := strconv.Atoi(edge[1])
 		if al[edgeA] == nil {
-			al[edgeA] = &Graph{value: edgeA}
+			al[edgeA] = &Node{value: edgeA}
 		}
 		if al[edgeB] == nil {
-			al[edgeB] = &Graph{value: edgeB}
+			al[edgeB] = &Node{value: edgeB}
 		}
 		al[edgeA].pointsTo = append(al[edgeA].pointsTo, al[edgeB])
 	}

@@ -14,8 +14,29 @@ type Test struct {
 	outputData string
 }
 
-func TestDFS(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestDFS(t *testing.T) {
+	tests := []Test{{strings.NewReader(`4 4
+3 2
+4 3
+1 4
+1 2
+3
+`), "3 2 1 4"}, {strings.NewReader(`2 1
+1 2
+1
+`), "1 2"}, {strings.NewReader(`6 7
+3 2
+5 4
+3 1
+1 4
+1 6
+1 2
+1 5
+1
+`), "1 2 3 4 5 6"}, {strings.NewReader(`3 1
+2 3
+1
+`), "1"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer(nil)
 		dFS.DFS(v.inputData, buf)
