@@ -40,12 +40,48 @@ func DFS(r io.Reader, w io.Writer) {
 	}
 	scaner.Scan()
 	start, _ := strconv.Atoi(scaner.Text())
-	res, err := dfc(al[start], make([]string, n+1))
-	if err != nil {
+	// 200ms
+	// var dfcRecurcial func(node *Node) error
+	// colors := make([]string, n+1)
+	// dfcRecurcial = func(node *Node) error {
+	// 	if node == nil {
+	// 		return errors.New("node doesen't exist")
+	// 	}
+	// 	colors[node.value] = "black"
+	// 	writer.WriteString(strconv.Itoa(node.value) + " ")
+	// 	node.pointsTo = mergeSrot(node.pointsTo)
+	// 	for _, v := range node.pointsTo {
+	// 		if colors[v.value] != "black" {
+	// 			dfcRecurcial(v)
+	// 		}
+
+	// 	}
+	// 	return nil
+
+	// }
+	// if err := dfcRecurcial(al[start]); err != nil {
+	// 	writer.WriteString(strconv.Itoa(start))
+	// }
+
+	// 196
+	if err := dfcRecurcialV2(al[start], make([]string, n+1), writer); err != nil {
 		writer.WriteString(strconv.Itoa(start))
-	} else {
-		writer.WriteString(strings.Join(res, " "))
 	}
+
+	// 1 second+; alloc?
+	// res := dfcRecurcial(al[start], make([]string, n+1), nil)
+	// for i := len(res) - 1; i >= 0; i-- {
+	// 	writer.WriteString(res[i] + " ")
+	// }
+
+	//248ms
+	// res, err := dfcMin(al[start], make([]string, n+1))
+
+	// if err != nil {
+	// 	writer.WriteString(strconv.Itoa(start))
+	// } else {
+	// 	writer.WriteString(strings.Join(res, " "))
+	// }
 
 	writer.Flush()
 	//
@@ -99,6 +135,29 @@ func dfc(node *Node, colors []string) ([]string, error) {
 	return result, nil
 }
 
+func dfcMin(node *Node, colors []string) ([]string, error) {
+	if node == nil {
+		return nil, errors.New("no such node")
+	}
+	stack := make(Stack, 0)
+	stack.Push(node)
+	result := make([]string, 0)
+	for stack.Len() != 0 {
+		n, _ := stack.Pop()
+		if colors[n.value] == "" {
+			colors[n.value] = "black"
+			result = append(result, strconv.Itoa(n.value))
+			n.pointsTo = mergeSrot(n.pointsTo)
+			for _, v := range n.pointsTo {
+				if colors[v.value] == "" {
+					stack.Push(v)
+				}
+			}
+		}
+	}
+	return result, nil
+}
+
 func mergeSrot(l AdjacenceList) AdjacenceList {
 	if len(l) <= 1 {
 		return l
@@ -120,6 +179,7 @@ func mergeSrot(l AdjacenceList) AdjacenceList {
 			aIndex++
 			continue
 		}
+		// <= if recursial, > if stack
 		if a[aIndex].value > b[bIndex].value {
 			res = append(res, a[aIndex])
 			aIndex++
@@ -134,19 +194,38 @@ func main() {
 	DFS(os.Stdin, os.Stdout)
 }
 
-// func dfc(node *Node, colors []string, result []string) []string {
+func dfcRecurcial(node *Node, colors []string, result []string) []string {
+	if colors[node.value] == "black" {
+		return nil
+	}
+	colors[node.value] = "black"
 
-// 	if colors[node.value] == "black" {
-// 		return nil
-// 	}
-// 	colors[node.value] = "black"
+	for _, v := range node.pointsTo {
+		if colors[v.value] != "black" {
+			result = append(result, dfcRecurcial(v, colors, nil)...)
+		}
 
-// 	for _, v := range node.pointsTo {
-// 		if colors[v.value] != "black" {
-// 			result = append(result, dfc(v, colors, nil)...)
-// 		}
+	}
+	result = append(result, strconv.Itoa(node.value))
+	return result
+}
 
-// 	}
-// 	result = append(result, strconv.Itoa(node.value))
-// 	return result
-// }
+func dfcRecurcialV2(node *Node, colors []string, wr *bufio.Writer) error {
+	if node == nil {
+		return errors.New("node doesen't exist")
+	}
+
+	if colors[node.value] == "black" {
+		return nil
+	}
+	colors[node.value] = "black"
+	wr.WriteString(strconv.Itoa(node.value) + " ")
+	// node.pointsTo = mergeSrot(node.pointsTo)
+	for _, v := range node.pointsTo {
+		if colors[v.value] != "black" {
+			dfcRecurcialV2(v, colors, wr)
+		}
+
+	}
+	return nil
+}

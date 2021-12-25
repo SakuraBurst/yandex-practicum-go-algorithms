@@ -45,3 +45,27 @@ func TestDFS(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkDFC(b *testing.B) {
+
+	for i := 0; i < b.N; i++ {
+		m := strings.NewReader(`10 13
+9 2
+1 3
+6 10
+5 10
+9 10
+5 9
+3 5
+5 2
+6 7
+5 6
+8 3
+6 1
+4 2
+7
+`)
+		buf := bytes.NewBuffer(nil)
+		dFS.DFS(m, buf)
+	}
+}

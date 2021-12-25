@@ -19,7 +19,7 @@ func TestPolinominalHash(t *testing.T) {
 100003
 a`), "97"}, {strings.NewReader(`1000
 1000009
-abcdefgh`), "6080"}, {strings.NewReader(`123
+abcdefgh`), "436420"}, {strings.NewReader(`123
 100003
 HaSH`), "56156"}}
 	for _, v := range tests {
