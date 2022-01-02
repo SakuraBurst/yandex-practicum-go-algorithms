@@ -39,6 +39,7 @@ func DFS(r io.Reader, w io.Writer) {
 		al[edgeB].pointsTo = append(al[edgeB].pointsTo, al[edgeA])
 	}
 	scaner.Scan()
+
 	start, _ := strconv.Atoi(scaner.Text())
 	// 200ms
 	// var dfcRecurcial func(node *Node) error
@@ -112,11 +113,17 @@ func dfc(node *Node, colors []string) ([]string, error) {
 	if node == nil {
 		return nil, errors.New("no such node")
 	}
+
 	stack := make(Stack, 0)
+
 	stack.Push(node)
+
 	result := make([]string, 0)
+
 	for stack.Len() != 0 {
+
 		n, _ := stack.Pop()
+
 		if colors[n.value] == "" {
 			colors[n.value] = "gray"
 			stack.Push(n)
@@ -190,6 +197,7 @@ func mergeSrot(l AdjacenceList) AdjacenceList {
 	}
 	return res
 }
+
 func main() {
 	DFS(os.Stdin, os.Stdout)
 }
@@ -210,7 +218,7 @@ func dfcRecurcial(node *Node, colors []string, result []string) []string {
 	return result
 }
 
-func dfcRecurcialV2(node *Node, colors []string, wr *bufio.Writer) error {
+func dfcRecurcialV2(node *Node, colors []string, wr io.StringWriter) error {
 	if node == nil {
 		return errors.New("node doesen't exist")
 	}

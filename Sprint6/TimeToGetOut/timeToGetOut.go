@@ -53,7 +53,10 @@ func TimeToGetOut(r io.Reader, w io.Writer) {
 		n.pointsTo = merge(n.pointsTo)
 		for _, v := range n.pointsTo {
 			if colors[v.value] != "black" {
-				dfc(v)
+				err := dfc(v)
+				if err != nil {
+					return err
+				}
 			}
 		}
 		timer++
@@ -63,16 +66,31 @@ func TimeToGetOut(r io.Reader, w io.Writer) {
 	}
 	err := dfc(al[1])
 	if err != nil {
-		writer.WriteString("0 1")
-		writer.WriteByte('\n')
+		_, err := writer.WriteString("0 1")
+		if err != nil {
+			return
+		}
+		err = writer.WriteByte('\n')
+		if err != nil {
+			return
+		}
 	} else {
 		for i := 1; i < n+1; i++ {
-			writer.WriteString(timeIn[i] + " " + timerOut[i])
-			writer.WriteByte('\n')
+			_, err := writer.WriteString(timeIn[i] + " " + timerOut[i])
+			if err != nil {
+				return
+			}
+			err = writer.WriteByte('\n')
+			if err != nil {
+				return
+			}
 		}
 	}
 
-	writer.Flush()
+	err = writer.Flush()
+	if err != nil {
+		return
+	}
 
 }
 
