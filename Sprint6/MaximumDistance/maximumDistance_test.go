@@ -14,8 +14,29 @@ type Test struct {
 	outputData string
 }
 
-func TestMaximumDistance(t *testing.T){
-	tests := []Test{{strings.NewReader(""), ""}}
+func TestMaximumDistance(t *testing.T) {
+	tests := []Test{{strings.NewReader(`5 4
+2 1
+4 5
+4 3
+3 2
+2
+`), "3"}, {strings.NewReader(`3 3
+3 1
+1 2
+2 3
+1
+`), "1"}, {strings.NewReader(`6 8
+6 1
+1 3
+5 1
+3 5
+3 4
+6 5
+5 2
+6 2
+4
+`), "3"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer(nil)
 		maximumDistance.MaximumDistance(v.inputData, buf)
