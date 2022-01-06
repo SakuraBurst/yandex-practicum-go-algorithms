@@ -38,10 +38,12 @@ func TestMaximumDistance(t *testing.T) {
 4
 `), "3"}}
 	for _, v := range tests {
-		buf := bytes.NewBuffer(nil)
-		maximumDistance.MaximumDistance(v.inputData, buf)
-		if buf.String() != v.outputData {
-			t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
-		}
+		t.Run(v.outputData, func(t *testing.T) {
+			buf := bytes.NewBuffer(nil)
+			maximumDistance.MaximumDistance(v.inputData, buf)
+			if buf.String() != v.outputData {
+				t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
+			}
+		})
 	}
 }
