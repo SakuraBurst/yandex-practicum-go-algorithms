@@ -23,7 +23,7 @@ func main() {
 	// 	log.Fatal(err)
 	// }
 	// CreateAllDirectoriesAndFilesFromHtmlList(mainNode, "Sprint2")
-	createFilesForNextSprint("Sprint6")
+	createFilesForNextSprint("Sprint6FinalEx")
 }
 
 func reverseLinkedList(n, previesNode *Node) *Node {
