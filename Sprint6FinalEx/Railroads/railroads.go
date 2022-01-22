@@ -35,26 +35,7 @@ func Railroads(r io.Reader, w io.Writer) {
 	N, _ := strconv.Atoi(strings.TrimSpace(scanner.Text()))
 	ALR := make(AdjacencyList, N+1)
 	ALB := make(AdjacencyList, N+1)
-	for i := 1; i < N; i++ {
-		scanner.Scan()
-		railData := scanner.Text()
-		if ALR[i].pointsTo == nil {
-			ALR[i].pointsTo = make([]Edge, 0, N+1-i)
-			ALR[i].value = uint16(i)
-		}
-		if ALB[i].pointsTo == nil {
-			ALB[i].pointsTo = make([]Edge, 0, N+1-i)
-			ALB[i].value = uint16(i)
-		}
-		for g, datum := range railData {
-			if datum == 82 {
-				ALR[i].pointsTo = append(ALR[i].pointsTo, Edge(i+g+1))
-			} else {
-				ALB[i].pointsTo = append(ALB[i].pointsTo, Edge(i+g+1))
-			}
-		}
-
-	}
+	extractData(N, scanner, ALR, ALB)
 	writer := bufio.NewWriter(w)
 	roads := make(Matrix, N+1)
 	for _, vertex := range ALR {
@@ -80,38 +61,62 @@ func Railroads(r io.Reader, w io.Writer) {
 	writer.Flush()
 }
 
-func dfsOnlyCheck(AL AdjacencyList, vertex Vertex, citiesWithThatWayType []uint16, roads Matrix, currentWay WayType) {
-	citiesWithThatWayType = append(citiesWithThatWayType, vertex.value)
+func extractData(N int, scanner *bufio.Scanner, ALR AdjacencyList, ALB AdjacencyList) {
+	for i := 1; i < N; i++ {
+		scanner.Scan()
+		railData := scanner.Text()
+		if ALR[i].pointsTo == nil {
+			ALR[i].pointsTo = make([]Edge, 0, N+1-i)
+			ALR[i].value = uint16(i)
+		}
+		if ALB[i].pointsTo == nil {
+			ALB[i].pointsTo = make([]Edge, 0, N+1-i)
+			ALB[i].value = uint16(i)
+		}
+		for g, datum := range railData {
+			if datum == 82 {
+				ALR[i].pointsTo = append(ALR[i].pointsTo, Edge(i+g+1))
+			} else {
+				ALB[i].pointsTo = append(ALB[i].pointsTo, Edge(i+g+1))
+			}
+		}
+
+	}
+}
+
+func dfsOnlyCheck(AL AdjacencyList, vertex Vertex, roadsWithCurrentWayType []uint16, roads Matrix, currentWay WayType) {
+	roadsWithCurrentWayType = append(roadsWithCurrentWayType, vertex.value)
 Upper:
 	for _, edge := range vertex.pointsTo {
-		for _, i := range citiesWithThatWayType {
+		// этот цикл у меня был в самом начале функции
+		for _, i := range roadsWithCurrentWayType {
 			if roads[edge] == nil {
 				roads[edge] = make([]WayType, cap(roads))
 			}
-			roadValue := roads[edge][i]
-			if roadValue == currentWay {
+			roadWayType := roads[edge][i]
+			if roadWayType == currentWay {
 				continue Upper
 			}
 
 			roads[edge][i] = currentWay
 		}
-		dfsOnlyCheck(AL, AL[edge], citiesWithThatWayType, roads, currentWay)
+		dfsOnlyCheck(AL, AL[edge], roadsWithCurrentWayType, roads, currentWay)
 	}
 }
 
-func dfs(AL AdjacencyList, vertex Vertex, citiesWithThatWayType []uint16, roads Matrix, currentWay WayType) bool {
-	citiesWithThatWayType = append(citiesWithThatWayType, vertex.value)
+func dfs(AL AdjacencyList, vertex Vertex, roadsWithCurrentWayType []uint16, roads Matrix, currentWay WayType) bool {
+	roadsWithCurrentWayType = append(roadsWithCurrentWayType, vertex.value)
 Upper:
 	for _, edge := range vertex.pointsTo {
-
-		for _, i := range citiesWithThatWayType {
+		// этот цикл у меня был в самом начале функции
+		for _, i := range roadsWithCurrentWayType {
 			if roads[edge] == nil {
 				roads[edge] = make([]WayType, cap(roads))
 			} else {
-				roadValue := roads[edge][i]
-				if roadValue != UnknownWay && roadValue != currentWay {
+				roadWayType := roads[edge][i]
+				if roadWayType != UnknownWay && roadWayType != currentWay {
 					return false
-				} else if roadValue == currentWay {
+				} else if roadWayType == currentWay {
 					continue Upper
 				}
 			}
@@ -119,7 +124,7 @@ Upper:
 			roads[edge][i] = currentWay
 		}
 
-		ok := dfs(AL, AL[edge], citiesWithThatWayType, roads, currentWay)
+		ok := dfs(AL, AL[edge], roadsWithCurrentWayType, roads, currentWay)
 		if !ok {
 			return false
 		}
