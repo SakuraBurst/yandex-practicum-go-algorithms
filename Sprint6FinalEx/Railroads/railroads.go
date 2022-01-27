@@ -124,7 +124,7 @@ func extractData(N int, scanner *bufio.Scanner, ALR AdjacencyList, ALB Adjacency
 			ALB[i].value = uint16(i)
 		}
 		for g, datum := range railData {
-			if datum == 82 {
+			if datum == 'R' {
 				ALR[i].pointsTo = append(ALR[i].pointsTo, Edge(i+g+1))
 			} else {
 				ALB[i].pointsTo = append(ALB[i].pointsTo, Edge(i+g+1))
