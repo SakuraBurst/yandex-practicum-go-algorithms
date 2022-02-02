@@ -15,12 +15,20 @@ type Test struct {
 }
 
 func TestJumpingUpTheStairs(t *testing.T) {
-	tests := []Test{{strings.NewReader(""), ""}}
+	tests := []Test{
+		{strings.NewReader("6 3"), "13"},
+		{strings.NewReader("7 7"), "32"},
+		{strings.NewReader("2 2"), "1"},
+		{strings.NewReader("62 44"), "535806680"},
+	}
 	for _, v := range tests {
-		buf := bytes.NewBuffer(nil)
-		jumpingUpTheStairs.JumpingUpTheStairs(v.inputData, buf)
-		if buf.String() != v.outputData {
-			t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
-		}
+		t.Run(v.outputData, func(t *testing.T) {
+			buf := bytes.NewBuffer(nil)
+			jumpingUpTheStairs.JumpingUpTheStairs(v.inputData, buf)
+			if buf.String() != v.outputData {
+				t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
+			}
+		})
+
 	}
 }
