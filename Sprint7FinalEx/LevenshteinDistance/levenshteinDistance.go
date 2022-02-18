@@ -49,18 +49,22 @@ func LevenshteinDistance(r io.Reader, w io.Writer) {
 	for i := 0; i < len(sChars)+1; i++ {
 		matrix[i] = make([]int, len(mChars)+1)
 		if i == 0 {
+			for g := 0; g < len(mChars)+1; g++ {
+				matrix[i][g] = g
+			}
 			continue
 		}
-		for g := 1; g < len(mChars)+1; g++ {
-			if sChars[i-1] == mChars[g-1] {
-				if matrix[i][g-1] == 0 {
-					matrix[i][g] = 0
-				} else {
-					matrix[i][g] = matrix[i][g-1] - 1
-				}
+		for g := 0; g < len(mChars)+1; g++ {
+			if g == 0 {
+				matrix[i][g] = i
+				continue
+			}
+			if sChars[i-1] == mChars[g-1] && matrix[i-1][g] >= matrix[i-1][g-1] {
+
+				matrix[i][g] = matrix[i-1][g] - 1
 
 			} else {
-				matrix[i][g] = matrix[i][g-1] + 1
+				matrix[i][g] = min(matrix[i][g-1], matrix[i-1][g]) + 1
 			}
 		}
 	}
@@ -79,6 +83,9 @@ func max(a, b int) int {
 }
 
 func min(a, b int) int {
+	//if a == 0 || b == 0 {
+	//	return max(a, b)
+	//}
 	if a < b {
 		return a
 	}
