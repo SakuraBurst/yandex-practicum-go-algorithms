@@ -33,16 +33,6 @@ func LevenshteinDistance(r io.Reader, w io.Writer) {
 	s := scanner.Text()
 	scanner.Scan()
 	m := scanner.Text()
-	//var maxStringLength int
-	//var minStringLength int
-	if len(s) > len(m) {
-		//maxStringLength = len(s)
-		//minStringLength = len(m)
-	} else {
-		//maxStringLength = len(m)
-		s, m = m, s
-		//minStringLength = len(s)
-	}
 	sChars := strings.Split(s, "")
 	mChars := strings.Split(m, "")
 	matrix := make(Matrix, len(sChars)+1)
@@ -54,21 +44,16 @@ func LevenshteinDistance(r io.Reader, w io.Writer) {
 			}
 			continue
 		}
+
 		for g := 0; g < len(mChars)+1; g++ {
 			if g == 0 {
 				matrix[i][g] = i
 				continue
 			}
-			if sChars[i-1] == mChars[g-1] && matrix[i-1][g] >= matrix[i-1][g-1] {
-
-				matrix[i][g] = matrix[i-1][g] - 1
-
-			} else {
-				matrix[i][g] = min(matrix[i][g-1], matrix[i-1][g]) + 1
-			}
+			matrix[i][g] = min(matrix[i-1][g]+1, matrix[i][g-1]+1, matrix[i-1][g-1]+diff(sChars[i-1], mChars[g-1]))
 		}
 	}
-	fmt.Println(matrix.String(s, m))
+	//fmt.Println(matrix.String(s, m))
 	//fmt.Println(maxStringLength, minStringLength, matrix[len(sChars)][len(mChars)])
 	writer := bufio.NewWriter(w)
 	writer.WriteString(strconv.Itoa(matrix[len(sChars)][len(mChars)]))
@@ -82,16 +67,57 @@ func max(a, b int) int {
 	return b
 }
 
-func min(a, b int) int {
-	//if a == 0 || b == 0 {
-	//	return max(a, b)
-	//}
+func min(a, b, c int) int {
 	if a < b {
-		return a
+		if a < c {
+			return a
+		}
+		return c
 	}
-	return b
+	if b < c {
+		return b
+	}
+	return c
+}
+
+func diff(a, b string) int {
+	if a == b {
+		return 0
+	}
+	return 1
 }
 
 func main() {
 	LevenshteinDistance(os.Stdin, os.Stdout)
 }
+
+//subStirngModifedIndexes := make(map[int]bool, len(mChars))
+//for i := 0; i < len(sChars)+1; i++ {
+//matrix[i] = make([]int, len(mChars)+1)
+//if i == 0 {
+//for g := 0; g < len(mChars)+1; g++ {
+//matrix[i][g] = g
+//}
+//continue
+//}
+//
+//isModifed := false
+//for g := 0; g < len(mChars)+1; g++ {
+//if g == 0 {
+//matrix[i][g] = i
+//continue
+//}
+//if sChars[i-1] == mChars[g-1] && !isModifed && !subStirngModifedIndexes[g] {
+//matrix[i][g] = max(matrix[i][g-1], matrix[i-1][g]) - 1
+//isModifed = true
+//subStirngModifedIndexes[g] = true
+//} else {
+//if isModifed || subStirngModifedIndexes[g] {
+//matrix[i][g] = min(matrix[i][g-1]+1, matrix[i-1][g]+1)
+//} else {
+//matrix[i][g] = max(matrix[i][g-1], matrix[i-1][g])
+//}
+//
+//}
+//}
+//}

@@ -23,7 +23,8 @@ innnokkentia
 x
 `), "1"}, {strings.NewReader(`dxqrpmratn
 jdpmykgmaitn`), "8"}, {strings.NewReader(`abcdefghj
-mnabcdelghj`), "3"}}
+mnabcdelghj`), "3"}, {strings.NewReader(`yoklmn
+ufhca`), "6"}}
 	for _, v := range tests {
 		t.Run(v.outputData, func(t *testing.T) {
 			buf := bytes.NewBuffer(nil)
