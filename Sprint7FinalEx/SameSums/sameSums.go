@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -41,45 +40,43 @@ func SameSums(r io.Reader, w io.Writer) {
 		writer.Flush()
 		return
 	}
-	fmt.Println(sum)
 	dp := make(Matrix, n+1)
 	for i := 0; i < n+1; i++ {
-		dp[i] = make([]int, n+1)
+		dp[i] = make([]int, sum/2+1)
 		if i == 0 {
-			//for index := 1; index < n+1; index++ {
-			//	dp[i][index] = data[index-1]
-			//
-			//}
 			continue
 		}
-		for g := 1; g < n+1; g++ {
-			//if g == 0 {
-			//	dp[i][g] = data[i-1]
-			//	continue
-			//}
-			if i == g {
-				dp[i][g] = dp[i-1][g]
-				continue
+		for g := 1; g < sum/2+1; g++ {
+			dp[i][g] = dp[i-1][g]
+			if g == data[i-1] {
+				dp[i][g]++
 			}
-			dp[i][g] = data[i-1] + dp[i-1][g]
-			log.Println(dp[i][g] != 1 && dp[i][g] != 0 && sum%dp[i][g] == 0)
+			if g > data[i-1] && dp[i-1][g-data[i-1]] > 0 {
+				dp[i][g]++
+			}
+
 		}
 	}
-	fmt.Println(dp)
+	//fmt.Println(dp)
 
-	for i, v := range dp[n] {
-		if i == 0 {
-			continue
-		}
-		log.Println(sum-v, data[i-1])
-		if sum2[sum-v] && sum-v != data[i-1] {
-
-			writer.WriteString("True")
-			writer.Flush()
-			return
-		}
+	//for i, v := range dp[n] {
+	//	if i == 0 {
+	//		continue
+	//	}
+	//	log.Println(sum-v, data[i-1])
+	//	if sum2[sum-v] && sum-v != data[i-1] {
+	//
+	//		writer.WriteString("True")
+	//		writer.Flush()
+	//		return
+	//	}
+	//}
+	if dp[n][sum/2] > 1 {
+		writer.WriteString("True")
+	} else {
+		writer.WriteString("False")
 	}
-	writer.WriteString("False")
+
 	writer.Flush()
 
 }

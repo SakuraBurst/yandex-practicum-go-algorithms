@@ -21,7 +21,8 @@ func TestSameSums(t *testing.T) {
 2 10 9
 `), "False"}, {strings.NewReader(`4
 2 2 2 2
-`), "True"}}
+`), "True"}, {strings.NewReader(`6
+7 9 3 4 6 7`), "True"}}
 	for _, v := range tests {
 		t.Run(v.outputData, func(t *testing.T) {
 			buf := bytes.NewBuffer(nil)
