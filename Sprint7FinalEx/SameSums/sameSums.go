@@ -28,11 +28,9 @@ func SameSums(r io.Reader, w io.Writer) {
 	inputData := strings.Fields(scanner.Text())
 	data := make([]int, n)
 	sum := 0
-	sum2 := make(map[int]bool)
 	for i := 0; i < n; i++ {
 		data[i], _ = strconv.Atoi(inputData[i])
 		sum += data[i]
-		sum2[data[i]] = true
 	}
 	writer := bufio.NewWriter(w)
 	if sum%2 != 0 {
@@ -40,38 +38,39 @@ func SameSums(r io.Reader, w io.Writer) {
 		writer.Flush()
 		return
 	}
-	dp := make(Matrix, n+1)
-	for i := 0; i < n+1; i++ {
-		dp[i] = make([]int, sum/2+1)
-		if i == 0 {
-			continue
-		}
+	dpPrev := make([]int, sum/2+1)
+	dp := make([]int, sum/2+1)
+	for i := 1; i < n+1; i++ {
 		for g := 1; g < sum/2+1; g++ {
-			dp[i][g] = dp[i-1][g]
+			dp[g] = dpPrev[g]
 			if g == data[i-1] {
-				dp[i][g]++
+				dp[g]++
 			}
-			if g > data[i-1] && dp[i-1][g-data[i-1]] > 0 {
-				dp[i][g]++
+			if g > data[i-1] && dpPrev[g-data[i-1]] > 0 {
+				dp[g]++
 			}
-
 		}
+		dpPrev = dp
+		dp = make([]int, sum/2+1)
 	}
-	//fmt.Println(dp)
-
-	//for i, v := range dp[n] {
+	//dp := make(Matrix, n+1)
+	//for i := 0; i < n+1; i++ {
+	//	dp[i] = make([]int, sum/2+1)
 	//	if i == 0 {
 	//		continue
 	//	}
-	//	log.Println(sum-v, data[i-1])
-	//	if sum2[sum-v] && sum-v != data[i-1] {
+	//	for g := 1; g < sum/2+1; g++ {
+	//		dp[i][g] = dp[i-1][g]
+	//		if g == data[i-1] {
+	//			dp[i][g]++
+	//		}
+	//		if g > data[i-1] && dp[i-1][g-data[i-1]] > 0 {
+	//			dp[i][g]++
+	//		}
 	//
-	//		writer.WriteString("True")
-	//		writer.Flush()
-	//		return
 	//	}
 	//}
-	if dp[n][sum/2] > 1 {
+	if dpPrev[sum/2] > 1 {
 		writer.WriteString("True")
 	} else {
 		writer.WriteString("False")
