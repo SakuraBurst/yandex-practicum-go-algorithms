@@ -1,3 +1,66 @@
+/**
+id в контесте 65529751
+-- ПРИНЦИП РАБОТЫ --
+Я использовал двумерную динамику. Опишу алгоритм как в теории:
+1. Что будет храниться в матрице dp?
+	В матрице dp будет храниться то, сколько нужно преобразований префикса строки s[0:i] для того, чтобы получить префикс строки m[0:g]
+2. Каким будет базовый случай для задачи?
+	То сколько нужно преобразований для пустых строк. Для пустой строки s и пустой строки m нужно 0 преобразований. Для строки s длинной 1 и
+	пустой строки m нужно 1 преобразование и т.д.
+3. Каким будет переход динамики?
+	Если s[i] == m[g] то мы просто берем то, сколько нужно преобразований префикса s[0:i - 1] для получения m[0:g - 1]
+
+
+	Если нет, то мы выбираем минимальное значение из 3:
+	Сколько нужно преобразований префикса s[0:i - 1] для получения m[0:g] + 1, что, по сути, является удалением s[i],
+	Сколько нужно преобразований префикса m[0:g - 1] для получения s[0:i] + 1, что, по сути, является удалением m[g],
+	Сколько нужно преобразований префикса s[0:i - 1] для получения m[0:g - 1] + 1, что, по сути, является заменой m[g] на s[i]
+
+	Если s[i] != m[g], то при любом раскладе у нас будет +1,
+
+	Грубо говоря, если s[i] == m[g] то мы берем значение из предыдущих подстрок, не прибавляя ничего, если  s[i] != m[g], то мы делаем +1
+
+4. Каким будет порядок вычисления данных в массиве dp?
+	Используя Динамическое программирование назад, смотря предыдущие значения, изначально исходя из базового случая
+5. Где будет располагаться ответ на исходный вопрос?
+	В матрице dp[len(s)][len(m)]
+
+-- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
+Даже не знаю что тут написать:) По сути, корректность доказывает базовый случай и переход динамики.
+Если представить, что у нас есть строки abac и acab то базовый случай будет таким:
+     a c a b
+  [0 1 2 3 4]
+a [1 0 0 0 0]
+b [2 0 0 0 0]
+a [3 0 0 0 0]
+c [4 0 0 0 0]
+
+По сути самое важное в корректной работе алгоритма, это то, что если символы равны, мы берем dp[i-1][g-1], то есть результат без последнего символа
+обеих строк
+
+Опираясь на переход динамики, первая итерация даст нам такой результат:
+     a c a b
+  [0 1 2 3 4]
+a [1 0 1 2 3]
+b [2 0 0 0 0]
+a [3 0 0 0 0]
+c [4 0 0 0 0]
+
+В итоге мы получим такой результат:
+
+     a c a b
+  [0 1 2 3 4]
+a [1 0 1 2 3]
+b [2 1 1 2 2]
+a [3 2 2 1 2]
+c [4 3 2 2 2]
+-- ВРЕМЕННАЯ СЛОЖНОСТЬ --
+Обычная двумерная динамика O(len(s) * len(m))
+-- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
+Мы храним обе строки + матрицу размером len(s) на len(m), в итоге получаем O(len(s) + len(m) + len(s) * len(m))
+
+*/
+
 package levenshteinDistance
 
 import (
@@ -33,30 +96,31 @@ func LevenshteinDistance(r io.Reader, w io.Writer) {
 	s := scanner.Text()
 	scanner.Scan()
 	m := scanner.Text()
-	sChars := strings.Split(s, "")
-	mChars := strings.Split(m, "")
-	matrix := make(Matrix, len(sChars)+1)
-	for i := 0; i < len(sChars)+1; i++ {
-		matrix[i] = make([]int, len(mChars)+1)
+	dp := make(Matrix, len(s)+1)
+	for i := 0; i < len(s)+1; i++ {
+		dp[i] = make([]int, len(m)+1)
 		if i == 0 {
-			for g := 0; g < len(mChars)+1; g++ {
-				matrix[i][g] = g
+			for g := 0; g < len(m)+1; g++ {
+				dp[i][g] = g
 			}
 			continue
 		}
 
-		for g := 0; g < len(mChars)+1; g++ {
+		for g := 0; g < len(m)+1; g++ {
 			if g == 0 {
-				matrix[i][g] = i
+				dp[i][g] = i
 				continue
 			}
-			matrix[i][g] = min(matrix[i-1][g]+1, matrix[i][g-1]+1, matrix[i-1][g-1]+diff(sChars[i-1], mChars[g-1]))
+			if s[i-1] == m[g-1] {
+				dp[i][g] = dp[i-1][g-1]
+			} else {
+				dp[i][g] = minOfThree(dp[i-1][g]+1, dp[i][g-1]+1, dp[i-1][g-1]+1)
+			}
 		}
 	}
-	//fmt.Println(matrix.String(s, m))
-	//fmt.Println(maxStringLength, minStringLength, matrix[len(sChars)][len(mChars)])
+	//fmt.Println(dp.String(s, m))
 	writer := bufio.NewWriter(w)
-	writer.WriteString(strconv.Itoa(matrix[len(sChars)][len(mChars)]))
+	writer.WriteString(strconv.Itoa(dp[len(s)][len(m)]))
 	writer.Flush()
 }
 
@@ -67,57 +131,18 @@ func max(a, b int) int {
 	return b
 }
 
-func min(a, b, c int) int {
-	if a < b {
-		if a < c {
-			return a
-		}
-		return c
-	}
-	if b < c {
-		return b
-	}
-	return c
+func minOfThree(a, b, c int) int {
+	abMin := minOfTwo(a, b)
+	return minOfTwo(abMin, c)
 }
 
-func diff(a, b string) int {
-	if a == b {
-		return 0
+func minOfTwo(a, b int) int {
+	if a < b {
+		return a
 	}
-	return 1
+	return b
 }
 
 func main() {
 	LevenshteinDistance(os.Stdin, os.Stdout)
 }
-
-//subStirngModifedIndexes := make(map[int]bool, len(mChars))
-//for i := 0; i < len(sChars)+1; i++ {
-//matrix[i] = make([]int, len(mChars)+1)
-//if i == 0 {
-//for g := 0; g < len(mChars)+1; g++ {
-//matrix[i][g] = g
-//}
-//continue
-//}
-//
-//isModifed := false
-//for g := 0; g < len(mChars)+1; g++ {
-//if g == 0 {
-//matrix[i][g] = i
-//continue
-//}
-//if sChars[i-1] == mChars[g-1] && !isModifed && !subStirngModifedIndexes[g] {
-//matrix[i][g] = max(matrix[i][g-1], matrix[i-1][g]) - 1
-//isModifed = true
-//subStirngModifedIndexes[g] = true
-//} else {
-//if isModifed || subStirngModifedIndexes[g] {
-//matrix[i][g] = min(matrix[i][g-1]+1, matrix[i-1][g]+1)
-//} else {
-//matrix[i][g] = max(matrix[i][g-1], matrix[i-1][g])
-//}
-//
-//}
-//}
-//}
