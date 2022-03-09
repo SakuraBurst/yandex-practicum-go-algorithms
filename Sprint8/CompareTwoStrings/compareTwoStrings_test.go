@@ -15,12 +15,21 @@ type Test struct {
 }
 
 func TestCompareTwoStrings(t *testing.T) {
-	tests := []Test{{strings.NewReader(""), ""}}
+	tests := []Test{{strings.NewReader(`gggggbbb
+bbef
+`), "-1"}, {strings.NewReader(`z
+aaaaaaa
+`), "1"}, {strings.NewReader(`ccccz
+aaaaaz
+`), "0"}}
 	for _, v := range tests {
-		buf := bytes.NewBuffer(nil)
-		compareTwoStrings.CompareTwoStrings(v.inputData, buf)
-		if buf.String() != v.outputData {
-			t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
-		}
+		t.Run(v.outputData, func(t *testing.T) {
+			buf := bytes.NewBuffer(nil)
+			compareTwoStrings.CompareTwoStrings(v.inputData, buf)
+			if buf.String() != v.outputData {
+				t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
+			}
+		})
+
 	}
 }
