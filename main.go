@@ -3,11 +3,11 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"golang.org/x/net/html"
 	"log"
 	"os"
+	"strings"
 	"text/template"
-
-	"golang.org/x/net/html"
 )
 
 type Node struct {
@@ -23,6 +23,32 @@ func main() {
 	// 	log.Fatal(err)
 	// }
 	// CreateAllDirectoriesAndFilesFromHtmlList(mainNode, "Sprint2")
+	//bigBigInt := 1 << 30
+	//aBuilder := strings.Builder{}
+	//bBuilder := strings.Builder{}
+	//rand.Seed(time.Now().Unix())
+	//log.Println("string builds are started")
+	//for i := 0; i < bigBigInt; i++ {
+	//	a := uint8(rand.Intn(122-65) + 65)
+	//	aBuilder.WriteByte(a)
+	//	bBuilder.WriteByte(a)
+	//}
+	//log.Println("strings build are ended with length", bigBigInt)
+	//log.Println("strings compare are started")
+	//a := aBuilder.String()
+	//b := bBuilder.String()
+	//res := a == b
+	//log.Println("strings compare are ended")
+	//log.Println("result ", res)
+	//log.Println("custom check are started")
+	//for i := 0; i < bigBigInt; i++ {
+	//	if a[i] != b[i] {
+	//		log.Println("custom check is ended")
+	//		log.Println("result false")
+	//	}
+	//}
+	//log.Println("custom check is ended")
+	//log.Println("result true")
 	createFilesForNextSprint("Sprint8")
 }
 
@@ -142,4 +168,12 @@ func CreateAllDirectoriesAndFilesFromHtmlList(node *html.Node, dir string) {
 	CreateAllDirectoriesAndFilesFromHtmlList(node.FirstChild, dir)
 	CreateAllDirectoriesAndFilesFromHtmlList(node.NextSibling, dir)
 
+}
+
+func stringsCompare(a, b string) bool {
+	return strings.Compare(a, b) == 0
+}
+
+func operatorCompare(a, b string) bool {
+	return a == b
 }
