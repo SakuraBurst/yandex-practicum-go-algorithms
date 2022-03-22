@@ -15,12 +15,21 @@ type Test struct {
 }
 
 func TestGlobalReplacement(t *testing.T) {
-	tests := []Test{{strings.NewReader(""), ""}}
+	tests := []Test{{strings.NewReader(`pingpong
+ng
+mpi
+`), "pimpipompi"}, {strings.NewReader(`aaa
+a
+ab
+`), "ababab"}}
 	for _, v := range tests {
-		buf := bytes.NewBuffer(nil)
-		globalReplacement.GlobalReplacement(v.inputData, buf)
-		if buf.String() != v.outputData {
-			t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
-		}
+		t.Run(v.outputData, func(t *testing.T) {
+			buf := bytes.NewBuffer(nil)
+			globalReplacement.GlobalReplacement(v.inputData, buf)
+			if buf.String() != v.outputData {
+				t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
+			}
+		})
+
 	}
 }
