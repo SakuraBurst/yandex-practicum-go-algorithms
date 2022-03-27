@@ -17,7 +17,8 @@ type Test struct {
 func TestCountingThePrefixFunction(t *testing.T) {
 	tests := []Test{{strings.NewReader("abracadabrab\n"), "0 0 0 1 0 1 0 1 2 3 4 2 "},
 		{strings.NewReader("xxzzxxz\n"), "0 1 0 0 1 2 3 "},
-		{strings.NewReader("aaaaa\n"), "0 1 2 3 4 "}}
+		{strings.NewReader("aaaaa\n"), "0 1 2 3 4 "},
+	}
 	for _, v := range tests {
 		t.Run(v.outputData, func(t *testing.T) {
 			buf := bytes.NewBuffer(nil)
