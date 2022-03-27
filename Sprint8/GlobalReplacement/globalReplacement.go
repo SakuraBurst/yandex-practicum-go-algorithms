@@ -16,8 +16,8 @@ func GlobalReplacement(r io.Reader, w io.Writer) {
 	replacer, _ := reader.ReadString('\n')
 	replacer = replacer[:len(replacer)-1]
 	sentinel := pattern + "#" + s
-	patterLen := len(pattern)
-	prefixLen := patterLen + 1
+	patternLen := len(pattern)
+	prefixLen := patternLen + 1
 	dp := make([]int, len(sentinel))
 	result := make([]bool, len(s))
 	for i := prefixLen; i < len(sentinel); i++ {
@@ -29,8 +29,8 @@ func GlobalReplacement(r io.Reader, w io.Writer) {
 			dp[i] = k
 		} else {
 			dp[i] = k + 1
-			if dp[i] == patterLen {
-				result[i-patterLen*2] = true
+			if dp[i] == patternLen {
+				result[i-patternLen*2] = true
 			}
 		}
 
@@ -40,7 +40,7 @@ func GlobalReplacement(r io.Reader, w io.Writer) {
 	for i := 0; i < len(s); i++ {
 		if result[i] {
 			builder.WriteString(replacer)
-			i += patterLen - 1
+			i += patternLen - 1
 		} else {
 			builder.WriteByte(s[i])
 

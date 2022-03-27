@@ -1,0 +1,270 @@
+{
+  "IsBlack": false,
+  "Words": null,
+  "Tree": {
+    "A": {
+      "IsBlack": false,
+      "Words": null,
+      "Tree": {
+        "H": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "F": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "H": {
+                  "IsBlack": false,
+                  "Words": null,
+                  "Tree": {
+                    "M": {
+                      "IsBlack": false,
+                      "Words": null,
+                      "Tree": {
+                        "M": {
+                          "IsBlack": false,
+                          "Words": null,
+                          "Tree": {
+                            "Z": {
+                              "IsBlack": false,
+                              "Words": null,
+                              "Tree": {
+                                "Q": {
+                                  "IsBlack": true,
+                                  "Words": [
+                                    "AHyiFHMMZQ"
+                                  ],
+                                  "Tree": null
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "D": {
+      "IsBlack": false,
+      "Words": null,
+      "Tree": {
+        "C": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "N": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "G": {
+                  "IsBlack": true,
+                  "Words": [
+                    "hDqCNojsGl"
+                  ],
+                  "Tree": null
+                }
+              }
+            }
+          }
+        },
+        "P": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "S": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "V": {
+                  "IsBlack": false,
+                  "Words": null,
+                  "Tree": {
+                    "G": {
+                      "IsBlack": false,
+                      "Words": null,
+                      "Tree": {
+                        "U": {
+                          "IsBlack": true,
+                          "Words": [
+                            "DPSVGjUfuy"
+                          ],
+                          "Tree": {
+                            "A": {
+                              "IsBlack": true,
+                              "Words": [
+                                "DsPSVGUApr"
+                              ],
+                              "Tree": null
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "E": {
+      "IsBlack": false,
+      "Words": null,
+      "Tree": {
+        "A": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "G": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "P": {
+                  "IsBlack": false,
+                  "Words": null,
+                  "Tree": {
+                    "R": {
+                      "IsBlack": true,
+                      "Words": [
+                        "EpayAivGPR"
+                      ],
+                      "Tree": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "J": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "A": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "G": {
+                  "IsBlack": false,
+                  "Words": null,
+                  "Tree": {
+                    "P": {
+                      "IsBlack": false,
+                      "Words": null,
+                      "Tree": {
+                        "R": {
+                          "IsBlack": true,
+                          "Words": [
+                            "EJuoAvxGPR"
+                          ],
+                          "Tree": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "F": {
+      "IsBlack": false,
+      "Words": null,
+      "Tree": {
+        "H": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "R": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "J": {
+                  "IsBlack": false,
+                  "Words": null,
+                  "Tree": {
+                    "X": {
+                      "IsBlack": false,
+                      "Words": null,
+                      "Tree": {
+                        "N": {
+                          "IsBlack": true,
+                          "Words": [
+                            "bFHdRdJaXN"
+                          ],
+                          "Tree": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "J": {
+      "IsBlack": false,
+      "Words": null,
+      "Tree": {
+        "K": {
+          "IsBlack": false,
+          "Words": null,
+          "Tree": {
+            "L": {
+              "IsBlack": false,
+              "Words": null,
+              "Tree": {
+                "D": {
+                  "IsBlack": false,
+                  "Words": null,
+                  "Tree": {
+                    "U": {
+                      "IsBlack": false,
+                      "Words": null,
+                      "Tree": {
+                        "I": {
+                          "IsBlack": true,
+                          "Words": [
+                            "JKLDUIbhzh"
+                          ],
+                          "Tree": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "M": {
+      "IsBlack": true,
+      "Words": [
+        "Mqlmchycpc"
+      ],
+      "Tree": {
+        "L": {
+          "IsBlack": true,
+          "Words": [
+            "MhqzvipuzL"
+          ],
+          "Tree": null
+        }
+      }
+    }
+  }
+}
