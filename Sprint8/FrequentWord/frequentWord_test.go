@@ -15,12 +15,50 @@ type Test struct {
 }
 
 func TestFrequentWord(t *testing.T) {
-	tests := []Test{{strings.NewReader(""), ""}}
+	tests := []Test{
+		{strings.NewReader(`5
+caba
+aba
+caba
+abac
+aba
+`), "aba"},
+		{strings.NewReader(`3
+b
+bc
+bcd
+`), "b"},
+		{strings.NewReader(`10
+ciwlaxtnhhrnenw
+ciwnvsuni
+ciwaxeujmsmvpojqjkxk
+ciwnvsuni
+ciwnvsuni
+ciwuxlkecnofovq
+ciwuxlkecnofovq
+ciwodramivid
+ciwlaxtnhhrnenw
+ciwnvsuni`), "ciwnvsuni"},
+		{strings.NewReader(`10
+vuoikjyxxynwfxc
+vuojgssmntswtw
+vuohonbwjkjakrc
+vuohonbwjkjakrc
+vuo
+vuodzixbzuha
+vuo
+vuodzixbzuha
+vuoikjyxxynwfxc
+vuoikjyxxynwfxc`), "vuoikjyxxynwfxc"},
+	}
 	for _, v := range tests {
-		buf := bytes.NewBuffer(nil)
-		frequentWord.FrequentWord(v.inputData, buf)
-		if buf.String() != v.outputData {
-			t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
-		}
+		t.Run(v.outputData, func(t *testing.T) {
+			buf := bytes.NewBuffer(nil)
+			frequentWord.FrequentWord(v.inputData, buf)
+			if buf.String() != v.outputData {
+				t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
+			}
+		})
+
 	}
 }
