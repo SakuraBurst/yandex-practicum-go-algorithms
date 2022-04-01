@@ -49,7 +49,7 @@ func main() {
 	//}
 	//log.Println("custom check is ended")
 	//log.Println("result true")
-	createFilesForNextSprint("Sprint8")
+	createFilesForNextSprint("Sprint8FinalEx")
 }
 
 func reverseLinkedList(n, previesNode *Node) *Node {
