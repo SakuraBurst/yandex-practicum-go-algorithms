@@ -25,7 +25,7 @@ a2[aa3[b]]
 abacabaca
 2[abac]a
 3[aba]
-`), ""}}
+`), "aba"}}
 	for _, v := range tests {
 		buf := bytes.NewBuffer(nil)
 		packedPrefix.PackedPrefix(v.inputData, buf)
