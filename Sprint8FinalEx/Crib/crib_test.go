@@ -15,12 +15,48 @@ type Test struct {
 }
 
 func TestCrib(t *testing.T) {
-	tests := []Test{{strings.NewReader(""), ""}}
+	tests := []Test{
+		{strings.NewReader(`examiwillpasstheexam
+5
+will
+pass
+the
+exam
+i
+`), "YES"},
+		{strings.NewReader(`abacaba
+2
+abac
+caba
+`), "NO"},
+		{strings.NewReader(`abacaba
+3
+abac
+caba
+aba
+`), "YES"},
+		{strings.NewReader(`sscevscescescscsscevscevscesscsc
+4
+sce
+s
+scev
+sc
+`), "YES"},
+		{strings.NewReader(`syuwbawba
+wba
+yuwb
+syu
+syuw
+`), "YES"},
+	}
 	for _, v := range tests {
-		buf := bytes.NewBuffer(nil)
-		crib.Crib(v.inputData, buf)
-		if buf.String() != v.outputData {
-			t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
-		}
+		t.Run(v.outputData, func(t *testing.T) {
+			buf := bytes.NewBuffer(nil)
+			crib.Crib(v.inputData, buf)
+			if buf.String() != v.outputData {
+				t.Errorf("\nexpected:\n%s\ngot:\n%s", v.outputData, buf.String())
+			}
+		})
+
 	}
 }
