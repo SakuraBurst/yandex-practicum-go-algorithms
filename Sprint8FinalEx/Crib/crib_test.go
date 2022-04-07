@@ -18,12 +18,12 @@ func TestCrib(t *testing.T) {
 	tests := []Test{
 		{strings.NewReader(`examiwillpasstheexam
 5
-will
+willi
 pass
 the
 exam
 i
-`), "YES"},
+`), "NO"},
 		{strings.NewReader(`abacaba
 2
 abac

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"errors"
 	"io"
+	"log"
 	"os"
 	"strconv"
 	"unicode"
@@ -50,11 +51,13 @@ func Crib(r io.Reader, w io.Writer) {
 		var err error
 		var isSomeBlack bool
 		dp[i], isSomeBlack, err = findNodes(dp[i-1], c)
-		if err != nil && prefixesRoot.Tree[c] == nil {
-			break
-		}
-		if (err != nil || isSomeBlack) && prefixesRoot.Tree[c] != nil {
+
+		if isSomeBlack && prefixesRoot.Tree[c] != nil {
 			dp[i] = append(dp[i], prefixesRoot.Tree[c])
+		}
+		if len(dp[i]) == 0 {
+			log.Println(err)
+			break
 		}
 	}
 	//log.Println(dp)
@@ -69,11 +72,11 @@ func findNodes(n []*Node, char string) ([]*Node, bool, error) {
 	var res []*Node
 	isSomeBlack := false
 	for _, v := range n {
+		if v.IsBlack {
+			isSomeBlack = true
+		}
 		if v.Tree[char] != nil {
 			res = append(res, v.Tree[char])
-			if v.IsBlack {
-				isSomeBlack = true
-			}
 		}
 	}
 	if len(res) == 0 {
