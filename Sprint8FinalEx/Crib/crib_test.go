@@ -42,12 +42,34 @@ s
 scev
 sc
 `), "YES"},
-		{strings.NewReader(`syuwbawba
+		{strings.NewReader(`syuwbawbayuwba
+4
 wba
 yuwb
 syu
 syuw
 `), "YES"},
+		{strings.NewReader(`scbscbscba
+4
+scb
+sc
+b
+ba
+`), "YES"},
+		{strings.NewReader(`bwvfbtrjqpbwvfbbwvbwbbwbbwvbwvf
+4
+bwvf
+b
+bw
+bwv
+`), "NO"},
+		{strings.NewReader(`jnvsrjgdyvgdgdgdgdyvggdggdgdygd
+4
+g
+gdyv
+gdy
+gd
+`), "NO"},
 	}
 	for _, v := range tests {
 		t.Run(v.outputData, func(t *testing.T) {

@@ -2,27 +2,21 @@ package crib
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"os"
-	"sort"
 	"strconv"
 )
 
-type Prefixes []string
-
-func (p Prefixes) Len() int {
-	return len(p)
+type Node struct {
+	IsBlack bool
+	Tree    PrefixTree
+	IsRoot  bool
 }
 
-func (p Prefixes) Less(i, j int) bool {
-	return len(p[i]) > len(p[j])
-}
+type PrefixTree map[string]*Node
 
-func (p Prefixes) Swap(i, j int) {
-	p[i], p[j] = p[j], p[i]
-}
-
-// БОР И ПРОХОДИМСЯ ПО ВСЕМ БУКВАМ, В БОРЕ СТАВИМ ХУЙНЮ КАКАУЮ-НИБУДЬ ДЛЯ ОПРЕДЕЛЕНИЯ ВСЕ ЛИ СЛОВА БЫЛИ ЗАЮЗАННЫ
+type DP [][]*Node
 
 func Crib(r io.Reader, w io.Writer) {
 	reader := bufio.NewReader(r)
@@ -30,45 +24,79 @@ func Crib(r io.Reader, w io.Writer) {
 	s = s[:len(s)-1]
 	nString, _ := reader.ReadString('\n')
 	n, _ := strconv.Atoi(nString[:len(nString)-1])
-	prefixes := make(Prefixes, n)
+	prefixesRoot := &Node{
+		IsBlack: false,
+		Tree:    PrefixTree{},
+		IsRoot:  true,
+	}
 	for i := 0; i < n; i++ {
 		p, _ := reader.ReadString('\n')
-		prefixes[i] = p[:len(p)-1]
+		addPrefix(prefixesRoot, p[:len(p)-1])
 	}
-	sort.Sort(prefixes)
-	words := make([]bool, len(s))
-	for _, prefix := range prefixes {
-		sentinelPrefixLen := len(prefix) + 1
-		sentinel := prefix + "#" + s
-		dp := make([]int, len(sentinel))
-		for i := sentinelPrefixLen; i < len(sentinel); i++ {
-			k := dp[i-1]
-			for k > 0 && sentinel[k] != sentinel[i] {
-				k = dp[k-1]
-			}
-			if sentinel[i] == sentinel[k] {
-				dp[i] = k + 1
-				if dp[i] == len(prefix) {
-					start := i - len(prefix)*2
-					end := i - len(prefix)
-					if !words[start] && !words[end-1] {
-						for g := start; g < end; g++ {
-							words[g] = true
-						}
-					}
-				}
-			} else {
-				dp[i] = k
+	if prefixesRoot.Tree[string(s[0])] == nil {
+		io.WriteString(w, "NO")
+		return
+	}
+	dp := make(DP, len(s))
+	dp[0] = append(dp[0], prefixesRoot.Tree[string(s[0])])
+	for i := 1; i < len(s); i++ {
+		c := string(s[i])
+		var err error
+		var isSomeBlack bool
+		dp[i], isSomeBlack, err = findNodes(dp[i-1], c)
+		if err != nil && prefixesRoot.Tree[c] == nil {
+			break
+		}
+		if (err != nil || isSomeBlack) && prefixesRoot.Tree[c] != nil {
+			dp[i] = append(dp[i], prefixesRoot.Tree[c])
+		}
+	}
+	//log.Println(dp)
+	if someIsBlack(dp[len(s)-1]) {
+		io.WriteString(w, "YES")
+	} else {
+		io.WriteString(w, "NO")
+	}
+}
+
+func findNodes(n []*Node, char string) ([]*Node, bool, error) {
+	var res []*Node
+	isSomeBlack := false
+	for _, v := range n {
+		if v.Tree[char] != nil {
+			res = append(res, v.Tree[char])
+			if v.IsBlack {
+				isSomeBlack = true
 			}
 		}
 	}
-	for _, word := range words {
-		if !word {
-			io.WriteString(w, "NO")
-			return
+	if len(res) == 0 {
+		return res, isSomeBlack, errors.New("there is no such nodes")
+	}
+	return res, isSomeBlack, nil
+}
+
+func someIsBlack(n []*Node) bool {
+	for _, v := range n {
+		if v.IsBlack {
+			return true
 		}
 	}
-	io.WriteString(w, "YES")
+	return false
+}
+
+func addPrefix(root *Node, s string) {
+	for _, r := range s {
+		_, ok := root.Tree[string(r)]
+		if !ok {
+			root.Tree[string(r)] = &Node{
+				IsBlack: false,
+				Tree:    PrefixTree{},
+			}
+		}
+		root = root.Tree[string(r)]
+	}
+	root.IsBlack = true
 }
 
 func main() {
