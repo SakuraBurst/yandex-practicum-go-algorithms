@@ -42,7 +42,7 @@ s
 scev
 sc
 `), "YES"},
-		{strings.NewReader(`syuwbawbayuwba
+		{strings.NewReader(`syuwbawbayuwb
 4
 wba
 yuwb

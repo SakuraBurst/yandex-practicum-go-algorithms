@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"strconv"
+	"unicode"
 )
 
 type Node struct {
@@ -31,7 +32,12 @@ func Crib(r io.Reader, w io.Writer) {
 	}
 	for i := 0; i < n; i++ {
 		p, _ := reader.ReadString('\n')
-		addPrefix(prefixesRoot, p[:len(p)-1])
+		if unicode.IsSpace(rune(p[len(p)-1])) {
+			addPrefix(prefixesRoot, p[:len(p)-1])
+		} else {
+			addPrefix(prefixesRoot, p)
+		}
+
 	}
 	if prefixesRoot.Tree[string(s[0])] == nil {
 		io.WriteString(w, "NO")
